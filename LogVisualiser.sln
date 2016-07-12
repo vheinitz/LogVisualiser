@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LogVisualiser", "LogVisualiser.vcproj", "{EB3DF4D9-9B96-3E21-BEC0-89F53A356606}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5CCC0860-5F7B-3E5B-B50A-4E7F0221CE88} = {5CCC0860-5F7B-3E5B-B50A-4E7F0221CE88}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cl2", "..\cl2\trunk\cl2.vcproj", "{5CCC0860-5F7B-3E5B-B50A-4E7F0221CE88}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB3DF4D9-9B96-3E21-BEC0-89F53A356606}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EB3DF4D9-9B96-3E21-BEC0-89F53A356606}.Debug|Win32.Build.0 = Debug|Win32
+		{EB3DF4D9-9B96-3E21-BEC0-89F53A356606}.Release|Win32.ActiveCfg = Release|Win32
+		{EB3DF4D9-9B96-3E21-BEC0-89F53A356606}.Release|Win32.Build.0 = Release|Win32
+		{5CCC0860-5F7B-3E5B-B50A-4E7F0221CE88}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5CCC0860-5F7B-3E5B-B50A-4E7F0221CE88}.Debug|Win32.Build.0 = Debug|Win32
+		{5CCC0860-5F7B-3E5B-B50A-4E7F0221CE88}.Release|Win32.ActiveCfg = Release|Win32
+		{5CCC0860-5F7B-3E5B-B50A-4E7F0221CE88}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
