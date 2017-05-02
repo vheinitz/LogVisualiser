@@ -22,22 +22,37 @@ public:
 private slots:
     void on_bReload_clicked();
 
-	void titleDoubleClick(QMouseEvent *event, QCPPlotTitle *title);
+	//void titleDoubleClick(QMouseEvent *event, QCPPlotTitle *title);
 	void axisLabelDoubleClick(QCPAxis* axis, QCPAxis::SelectablePart part);
 	void legendDoubleClick(QCPLegend* legend, QCPAbstractLegendItem* item);
 	void selectionChanged();
 	void mousePress();
 	void mouseWheel();
-	void addRandomGraph();
 	void removeSelectedGraph();
 	void removeAllGraphs();
 	void contextMenuRequest(QPoint pos);
 	void moveLegend();
 	void graphClicked(QCPAbstractPlottable *plottable);
 
+	void zoomXIn();
+	void zoomXOut();
+	void zoomYIn();
+	void zoomYOut();
+
+	bool addPlot(QString);
+
+	QCustomPlot* getPlot(QString);
+
+	void processXRangeChange(const QCPRange &newRange);
+
+	bool plotData(QString, QVector<double> x, QVector<double> y);
+
 private:
     Ui::App *ui;
 	QMap<QString, QString> _parsInstructions;
+	QMap<QString, QCustomPlot*> _plots;
+	QCustomPlot* _currentPlot;
+
 };
 
 #endif // APP_H

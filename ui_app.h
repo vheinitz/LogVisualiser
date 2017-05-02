@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'app.ui'
 **
-** Created: Sun 10. Jul 09:54:57 2016
+** Created: Tue 2. May 14:27:09 2017
 **      by: Qt User Interface Compiler version 4.8.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -25,7 +25,6 @@
 #include <QtGui/QToolBar>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
-#include <qcustomplot/qcustomplot.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -35,7 +34,7 @@ public:
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout;
     QTextEdit *tParser;
-    QCustomPlot *customPlot;
+    QVBoxLayout *ltPlots;
     QTextEdit *tOutput;
     QHBoxLayout *horizontalLayout;
     QLineEdit *eLogFile;
@@ -60,15 +59,11 @@ public:
 
         verticalLayout->addWidget(tParser);
 
-        customPlot = new QCustomPlot(centralWidget);
-        customPlot->setObjectName(QString::fromUtf8("customPlot"));
-        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(customPlot->sizePolicy().hasHeightForWidth());
-        customPlot->setSizePolicy(sizePolicy);
+        ltPlots = new QVBoxLayout();
+        ltPlots->setSpacing(6);
+        ltPlots->setObjectName(QString::fromUtf8("ltPlots"));
 
-        verticalLayout->addWidget(customPlot);
+        verticalLayout->addLayout(ltPlots);
 
         tOutput = new QTextEdit(centralWidget);
         tOutput->setObjectName(QString::fromUtf8("tOutput"));
