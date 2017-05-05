@@ -135,6 +135,12 @@ App::~App()
 void App::on_bReload_clicked()
 {
 
+	foreach(QString plotName, _plots.keys() )
+	{
+		delete _plots[plotName];
+	}
+	_plots.clear();
+
 	_parsInstructions = FSTools::mapFromText( ui->tParser->toPlainText(), QRegExp("\t") );
 
 	QMap<QString, QPair<QVector<double>, QVector<double> > > plotData;

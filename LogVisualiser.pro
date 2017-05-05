@@ -9,9 +9,9 @@ QT       += core gui
 TARGET = LogVisualiser
 DESTDIR = build
 TEMPLATE = app
-INCLUDES += ../../cl2.git
+INCLUDES += ../cl2/trunk
 
-INCLUDEPATH += . ../../cl2.git
+INCLUDEPATH += . ../cl2/trunk
 	      
 LIBS += build/cl2.lib
 
