@@ -1,0 +1,43 @@
+REGEDIT4
+
+[HKEY_CURRENT_USER\SOFTWARE\Jordan Russell]
+
+[HKEY_CURRENT_USER\SOFTWARE\Jordan Russell\Inno Setup]
+
+[HKEY_CURRENT_USER\SOFTWARE\Jordan Russell\Inno Setup\Options]
+"ShowToolbar"="1"
+"ShowStatusBar"="1"
+"LowPriorityDuringCompile"="0"
+"Zoom"="0"
+"ShowStartupForm"="0"
+"UseWizard"="1"
+"MakeBackups"="0"
+"FullPathInTitleBar"="0"
+"UndoAfterSave"="0"
+"PauseOnDebuggerExceptions"="1"
+"UseSynHigh"="1"
+"EditorCursorPastEOL"="1"
+"TabWidth"="2"
+"EditorFontName"="Courier New"
+"EditorFontSize"="10"
+"EditorFontCharset"="1"
+
+[HKEY_CURRENT_USER\SOFTWARE\Jordan Russell\Inno Setup\ScriptFileHistoryNew]
+"History0"="C:\\Development\\RC3.1_BL3.1.42\\Helios\\Installer\\WLCompare.iss"
+"History1"="C:\\Development\\RC3.1_BL3.1.42\\Helios\\Installer\\Helios.iss"
+"History2"="C:\\Development\\Helios_3.1R1_PR_bfx3.1.27\\Helios_PR\\Installer\\WLCrypt.iss"
+"History3"=""
+"History4"=""
+"History5"=""
+"History6"=""
+"History7"=""
+"History8"=""
+"History9"=""
+
+[HKEY_CURRENT_USER\SOFTWARE\Jordan Russell\Inno Setup\State]
+"WindowLeft"="432"
+"WindowTop"="182"
+"WindowRight"="1687"
+"WindowBottom"="986"
+"WindowMaximized"="0"
+"StatusPanelHeight"="104"
