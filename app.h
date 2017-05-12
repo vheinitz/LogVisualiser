@@ -47,6 +47,10 @@ private slots:
 
 	bool plotData(QString, QVector<double> x, QVector<double> y);
 
+protected:
+	void dragEnterEvent(QDragEnterEvent *event);
+	void dropEvent(QDropEvent *event);
+
 private:
     Ui::App *ui;
 	QMap<QString, QString> _parsInstructions;

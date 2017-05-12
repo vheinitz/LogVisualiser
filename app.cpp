@@ -5,6 +5,11 @@
 #include <QInputDialog>
 #include <QDateTime>
 #include <QShortcut>
+#include <QFile>
+#include <QDir>
+#include <QProcess>
+#include <QSettings>
+#include <QUrl>
 
 App::App(QWidget *parent) :
     QMainWindow(parent),
@@ -12,6 +17,7 @@ App::App(QWidget *parent) :
 	_currentPlot(0)
 {
     ui->setupUi(this);
+	this->acceptDrops();
 	PERSISTENCE_INIT( "heinitz-it.de", "LogVisualiser" )
 	PERSISTENT("RXText", ui->tParser, "plainText" )
     PERSISTENT("LogFile", ui->eLogFile, "text" )
@@ -28,6 +34,31 @@ App::App(QWidget *parent) :
 
   QShortcut* yOut = new QShortcut(Qt::CTRL + Qt::Key_4, this);
   connect( yOut, SIGNAL(activated()), this, SLOT(zoomYOut()));
+}
+
+void App::dragEnterEvent(QDragEnterEvent *event)
+{
+	if (event->mimeData()->hasFormat("text/uri-list"))
+	{
+		QList<QUrl> urls= event->mimeData()->urls();
+		if (urls.size()==1)
+		{
+			if (urls.at(0).toLocalFile().endsWith(".log",Qt::CaseInsensitive))
+			{
+				event->acceptProposedAction();
+			}			
+		}
+	}
+}
+
+void App::dropEvent(QDropEvent *event)
+{
+	QString fn = event->mimeData()->urls().at(0).toLocalFile();
+	QString action;
+	ui->eLogFile->setText(fn);
+	on_bReload_clicked();	
+
+	event->acceptProposedAction();
 }
 
 bool App::addPlot(QString plotName)
