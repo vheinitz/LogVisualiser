@@ -80,6 +80,8 @@ bool App::addPlot(QString plotName)
 
 	_plots[plotName]->xAxis->setLabel("time");
 	_plots[plotName]->yAxis->setLabel(plotName);
+	_plots[plotName]->yAxis->setNumberFormat("e");
+	_plots[plotName]->yAxis->setNumberPrecision(2);
 
 
 	// connect slot that ties some axis selections together (especially opposite axes):
