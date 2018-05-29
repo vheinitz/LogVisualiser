@@ -10,6 +10,7 @@
 #include <QProcess>
 #include <QSettings>
 #include <QUrl>
+#include <QProgressDialog>
 
 App::App(QWidget *parent) :
     QMainWindow(parent),
@@ -181,9 +182,13 @@ void App::on_bReload_clicked()
 	QStringList logdata = FSTools::fromFile(ui->eLogFile->text() );
 	int i = 0;
 	double xOffset=-1;
+	QProgressDialog dlg(tr("Loading"),tr("cancel"),0,logdata.size());
+	//dlg.setMaximum( logdata.size() );
+	dlg.show();
 	foreach(QString l, logdata )
 	{
 		QStringList items = l.split("\t");
+		dlg.setValue( dlg.value() +1 );
 		if (items.size() >= 3 )
 		{
 			foreach(QString rxstr, _parsInstructions.keys() )
@@ -195,8 +200,8 @@ void App::on_bReload_clicked()
 					QRegExp tsrx(tsrxstr);			// The rx should contain one single block ()
 					tsrx.indexIn(l);				// after parsing ...
 					QString dt = tsrxstr;//tsrx.cap(1);       // the captured string is got by cap(1)
-					QString tsstr = l.section(" ",-3,-3);
-					QString dname = l.section(" ",-2,-2);
+					QString tsstr = l.section(" ",-2,-2);
+					QString dname = l.section(" ",-3,-3);
 					double ts = tsstr.toDouble(); //TODO parse properly QDateTime::fromString( dt, "yyyy-MM-dd HH:mm:ss" ).toMSecsSinceEpoch();
 					if ( xOffset < 0 )
 						xOffset = ts;

@@ -7,13 +7,13 @@
 QT       += core gui
 
 TARGET = LogVisualiser
-DESTDIR = build
+DESTDIR = ../../build
 TEMPLATE = app
 INCLUDES += ../../cl2
 
 INCLUDEPATH += . ../../cl2
 	      
-LIBS += build/cl2.lib
+LIBS += ../../build/cl2.lib
 
 SOURCES += main.cpp\
         app.cpp \
