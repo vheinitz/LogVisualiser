@@ -12,6 +12,12 @@
 #include <QUrl>
 #include <QProgressDialog>
 
+/*
+ ([0-9]+)\t(.*)	TS:-1 V:1 N:Pos O:-18600000 S:0.00119047
+ ([0-9]+)\t([0-9]+)	TS:-1 V:2 N:AF O:0 S:1
+FF (1)	TS:-1 V:1 N:FF O:0 S:1
+*/
+
 App::App(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::App),
