@@ -5,11 +5,22 @@
 #include <QMap>
 #include <QString>
 #include "qcustomplot/qcustomplot.h"
+#include <QRegExp>
 
 
 namespace Ui {
 class App;
 }
+
+struct Instruction
+{
+	int _timestampSection;
+	int _valueSection;
+	double _offset;
+	double _scale;
+	QRegExp _rx;
+	QString _name;
+};
 
 class App : public QMainWindow
 {
@@ -40,6 +51,7 @@ private slots:
 	void zoomYOut();
 
 	bool addPlot(QString);
+	void processRangeChanged(const QCPRange &newRange);
 
 	QCustomPlot* getPlot(QString);
 
@@ -53,8 +65,8 @@ protected:
 
 private:
     Ui::App *ui;
-	QMap<QString, QString> _parsInstructions;
-	QMap<QString, QCustomPlot*> _plots;
+	QList<Instruction> _instructions;
+	QMap<QString, QCustomPlot*> _plots; //TODO not map. RX may be same for many graphs
 	QCustomPlot* _currentPlot;
 
 };

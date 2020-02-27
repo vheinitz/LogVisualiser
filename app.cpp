@@ -19,7 +19,7 @@ App::App(QWidget *parent) :
 {
     ui->setupUi(this);
 	this->acceptDrops();
-	PERSISTENCE_INIT( "heinitz-it.de", "LogVisualiser" )
+	PERSISTENCE_INIT( "vh", "LogVisualiser" )
 	PERSISTENT("RXText", ui->tParser, "plainText" )
     PERSISTENT("LogFile", ui->eLogFile, "text" )
 
@@ -62,12 +62,20 @@ void App::dropEvent(QDropEvent *event)
 	event->acceptProposedAction();
 }
 
+
+void App::processRangeChanged(const QCPRange &newRange)
+{
+	
+}
+
 bool App::addPlot(QString plotName)
 {
 	if ( _plots.contains( plotName ) )
 		return false;
 
 	_plots[plotName] = new QCustomPlot;
+
+	connect(_plots[plotName]->axisRect()->axes().at(0), SIGNAL(rangeChanged(QCPRange&)), this, SLOT( processRangeChanged(QCPRange&) ) );
 	ui->ltPlots->addWidget( _plots[plotName] );
 
 	_plots[plotName]->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom | QCP::iSelectAxes |
@@ -81,8 +89,8 @@ bool App::addPlot(QString plotName)
 
 	_plots[plotName]->xAxis->setLabel("time");
 	_plots[plotName]->yAxis->setLabel(plotName);
-	_plots[plotName]->yAxis->setNumberFormat("e");
-	_plots[plotName]->yAxis->setNumberPrecision(2);
+	//_plots[plotName]->yAxis->setNumberFormat("e");
+	//_plots[plotName]->yAxis->setNumberPrecision(2);
 
 
 	// connect slot that ties some axis selections together (especially opposite axes):
@@ -173,11 +181,46 @@ void App::on_bReload_clicked()
 	{
 		delete _plots[plotName];
 	}
+	_instructions.clear();
 	_plots.clear();
 
-	_parsInstructions = FSTools::mapFromText( ui->tParser->toPlainText(), QRegExp("\t") );
+	QMap<QString, QString> _parsInstructions = FSTools::mapFromText( ui->tParser->toPlainText(), QRegExp("\t") );
+
+	foreach ( QString k, _parsInstructions.keys() )
+	{
+		QMap<QString, QString> settings =  FSTools::mapFromText(_parsInstructions[k], QRegExp(":"), QRegExp(" "));
+		Instruction instr;
+		instr._rx = QRegExp( k );
+		foreach ( QString si, settings.keys() )
+		{
+			if ( si=="TS" )
+			{
+				instr._timestampSection = settings[si].toInt();
+			}
+			else if ( si=="V" )
+			{
+				instr._valueSection = settings[si].toInt();
+			}
+			else if ( si=="O" )
+			{
+				instr._offset = settings[si].toDouble();
+			}
+			else if ( si=="S" )
+			{
+				instr._scale = settings[si].toDouble();
+			}
+			else if ( si=="N" )
+			{
+				instr._name = settings[si];
+			}
+		}
+
+		_instructions.append(instr);
+
+	}
 
 	QMap<QString, QPair<QVector<double>, QVector<double> > > plotData;
+
 
 	QStringList logdata = FSTools::fromFile(ui->eLogFile->text() );
 	int i = 0;
@@ -185,36 +228,41 @@ void App::on_bReload_clicked()
 	QProgressDialog dlg(tr("Loading"),tr("cancel"),0,logdata.size());
 	//dlg.setMaximum( logdata.size() );
 	dlg.show();
+	int line=0;
 	foreach(QString l, logdata )
 	{
+		line++;
 		QStringList items = l.split("\t");
 		dlg.setValue( dlg.value() +1 );
 		if (items.size() >= 3 )
 		{
-			foreach(QString rxstr, _parsInstructions.keys() )
+			foreach(Instruction  instr, _instructions )
 			{
-				QRegExp rx(rxstr);
-				if ( l.contains(rx) )
+				
+				if ( instr._rx.indexIn(l) != -1 )
 				{
-					QString tsrxstr = items.at(0);	// Extracting timestemp
-					QRegExp tsrx(tsrxstr);			// The rx should contain one single block ()
-					tsrx.indexIn(l);				// after parsing ...
-					QString dt = tsrxstr;//tsrx.cap(1);       // the captured string is got by cap(1)
-					QString tsstr = l.section(" ",-2,-2);
-					QString dname = l.section(" ",-3,-3);
+					QString tsstr;
+					if ( instr._timestampSection == -1 ) //Use line instead of timestamp for syncronization
+					{
+						tsstr = QString::number(line);
+					}
+					else
+					{
+						tsstr = instr._rx.cap(instr._timestampSection);
+					}
+
 					double ts = tsstr.toDouble(); //TODO parse properly QDateTime::fromString( dt, "yyyy-MM-dd HH:mm:ss" ).toMSecsSinceEpoch();
 					if ( xOffset < 0 )
 						xOffset = ts;
 					ts -= xOffset;
 					ts /=1000; // sec/10
-					double y = l.section(" ",-1,-1).toDouble();
-					if ( dname == "MicroZaxis.position" )
-					{
-						y -= 17000000;
-						y /= 840;
-					}
-					plotData[dname].first.append(ts);
-					plotData[dname].second.append(y);
+					double y = instr._rx.cap(instr._valueSection).toDouble();
+
+					y += instr._offset;
+					y *= instr._scale;
+
+					plotData[instr._name].first.append(ts);
+					plotData[instr._name].second.append(y);
 					ui->tOutput->append(l);
 				}
 			}
