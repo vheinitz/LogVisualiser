@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LogVisualiser", "LogVisualiser.vcproj", "{7DB9B4CF-38ED-3F10-AED0-297CBCF8368C}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LogVisualiser", "LogVisualiser.vcproj", "{714F684D-F229-31CE-AAB6-AA3849A4E354}"
 	ProjectSection(ProjectDependencies) = postProject
 		{7B732A3F-2729-376D-9478-746ADE8A0776} = {7B732A3F-2729-376D-9478-746ADE8A0776}
 	EndProjectSection
@@ -14,10 +14,10 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7DB9B4CF-38ED-3F10-AED0-297CBCF8368C}.Debug|Win32.ActiveCfg = Debug|Win32
-		{7DB9B4CF-38ED-3F10-AED0-297CBCF8368C}.Debug|Win32.Build.0 = Debug|Win32
-		{7DB9B4CF-38ED-3F10-AED0-297CBCF8368C}.Release|Win32.ActiveCfg = Release|Win32
-		{7DB9B4CF-38ED-3F10-AED0-297CBCF8368C}.Release|Win32.Build.0 = Release|Win32
+		{714F684D-F229-31CE-AAB6-AA3849A4E354}.Debug|Win32.ActiveCfg = Debug|Win32
+		{714F684D-F229-31CE-AAB6-AA3849A4E354}.Debug|Win32.Build.0 = Debug|Win32
+		{714F684D-F229-31CE-AAB6-AA3849A4E354}.Release|Win32.ActiveCfg = Release|Win32
+		{714F684D-F229-31CE-AAB6-AA3849A4E354}.Release|Win32.Build.0 = Release|Win32
 		{7B732A3F-2729-376D-9478-746ADE8A0776}.Debug|Win32.ActiveCfg = Debug|Win32
 		{7B732A3F-2729-376D-9478-746ADE8A0776}.Debug|Win32.Build.0 = Debug|Win32
 		{7B732A3F-2729-376D-9478-746ADE8A0776}.Release|Win32.ActiveCfg = Release|Win32
