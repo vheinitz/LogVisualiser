@@ -12,6 +12,7 @@
 #include <QUrl>
 #include <QProgressDialog>
 
+//TODO RegExp is map-key. Make multimap!!!
 /*
 
 (.*VARS: )([0-9]+)(;0;)([0-9]+)(.*)	TS:2 V:4 N:Pos O:-18600000 S:0.00119047
@@ -195,32 +196,32 @@ void App::on_bReload_clicked()
 	_instructions.clear();
 	_plots.clear();
 
-	QMap<QString, QString> _parsInstructions = FSTools::mapFromText( ui->tParser->toPlainText(), QRegExp("\t") );
+	QStringList _parsInstructions = FSTools::fromText( ui->tParser->toPlainText() );
 
-	foreach ( QString k, _parsInstructions.keys() )
+	foreach ( QString k, _parsInstructions )
 	{
-		QMap<QString, QString> settings =  FSTools::mapFromText(_parsInstructions[k], QRegExp(":"), QRegExp(" "));
+		QMap<QString, QString> settings =  FSTools::mapFromText(k.section("\t",1,1), QRegExp(":"), QRegExp(" "));
 		Instruction instr;
-		instr._rx = QRegExp( k );
+		instr._rx = QRegExp( k.section("\t",0,0) );
 		foreach ( QString si, settings.keys() )
 		{
-			if ( si=="TS" )
+			if ( si=="TS" )         //Time Stamp
 			{
 				instr._timestampSection = settings[si].toInt();
 			}
-			else if ( si=="V" )
+			else if ( si=="V" )     //Value
 			{
 				instr._valueSection = settings[si].toInt();
 			}
-			else if ( si=="O" )
+			else if ( si=="O" )     //Offset (substracted from unscaled value)
 			{
 				instr._offset = settings[si].toDouble();
 			}
-			else if ( si=="S" )
+			else if ( si=="S" )     //Scale (multiplied with value without offset)
 			{
 				instr._scale = settings[si].toDouble();
 			}
-			else if ( si=="N" )
+			else if ( si=="N" )     //Name of Graph
 			{
 				instr._name = settings[si];
 			}
